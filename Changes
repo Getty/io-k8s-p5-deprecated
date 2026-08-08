@@ -1,6 +1,6 @@
 Revision history for IO-K8s-Deprecated
 
-{{$NEXT}}
+1.105     2026-08-08 03:21:30Z
 
     First release. Permanent home for CPAN redirect ("tombstone") stub
     modules covering IO::K8s modules that were genuinely removed within the
