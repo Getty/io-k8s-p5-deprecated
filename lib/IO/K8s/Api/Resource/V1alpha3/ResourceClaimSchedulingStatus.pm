@@ -4,7 +4,7 @@ package IO::K8s::Api::Resource::V1alpha3::ResourceClaimSchedulingStatus;
 use strict;
 use warnings;
 
-our $VERSION = '1.105';
+our $VERSION = '1.106';
 
 die __PACKAGE__ . " has been removed. It described one ResourceClaim's"
   . " WaitForFirstConsumer scheduling status within a"
