@@ -49,24 +49,29 @@ tombstone" procedure (including the audit method, and how to distinguish a
 genuine orphan from the two false-start patterns above) are in the
 `io-k8s-deprecated` skill, not duplicated here.
 
-## Version policy — deliberate exception
+## Version policy — normal dzil versioning, no per-file overrides
 
-`dist.ini` sets `version_finder = :MainModule` on `[@Author::GETTY]` — this
-is **required**, not incidental. IO-K8s's own convention (the sibling
-distribution this one covers) gives *every* sub-module a real, dzil-managed
-`$VERSION` that changes on every release. If this dist inherited that
-default, `dzil release` would silently overwrite every tombstone's hand-set
-high `$VERSION` with this young distribution's own low version number,
-handing the PAUSE index entry straight back to the stale `IO-K8s` release
-the tombstone was supposed to shadow. Only `lib/IO/K8s/Deprecated.pm` (the
-dist's nominal main module) is dzil-versioned; every tombstone module
-carries a hand-written, hard-coded `our $VERSION = '...';` with an inline
-comment explaining why, and it must never be "normalized" away.
+`dist.ini` has **no** `version_finder` restriction. Every file -- the main
+module and all 80 tombstones alike -- versions normally and uniformly with
+the rest of the distribution (`RewriteVersion::Transitional` /
+`BumpVersionAfterRelease`), same as `IO-K8s` itself. The starting version,
+`1.105`, was chosen for one reason: it's safely past `IO-K8s 1.100`, the
+last CPAN release that shipped any of these module names. Since `IO-K8s`
+will never ship these names again (they're permanently gone, not just
+between releases) and this dist's version only ever increases, `1.105`
+stays ahead of that target for good. Full reasoning:
+`lib/IO/K8s/Deprecated.pm`'s "VERSION POLICY" section.
+
+If a future tombstone needs a name whose last-shipped version exceeds
+whatever version this dist has reached by then, that's an ordinary
+version-ordering check before release -- not a reason to reintroduce
+per-file version overrides.
 
 ## Current tombstones
 
-80 modules total, two shapes, both versioned `$VERSION = '1.200'` to beat
-`IO-K8s` `1.100` (the last release that shipped every one of these names):
+80 modules total, two shapes, all versioned `$VERSION = '1.105'` (safely
+past `IO-K8s` `1.100`, the last release that shipped every one of these
+names):
 
 - **76 "consolidated" tombstones** — the old per-resource `*List` classes
   IO-K8s consolidated into the generic `IO::K8s::List`. Full list:

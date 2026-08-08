@@ -1,5 +1,5 @@
 package IO::K8s::Deprecated;
-our $VERSION = '0.001';
+our $VERSION = '1.105';
 # ABSTRACT: Registry of CPAN redirect stubs for renamed/retired IO::K8s modules
 
 use strict;
@@ -55,6 +55,26 @@ This dist itself (C<IO::K8s::Deprecated>, this module) has no runtime
 behaviour of its own -- it is a documentation landing page and the dzil
 main module. Each tombstone module is self-contained and carries no
 dependency on IO::K8s core.
+
+=head1 VERSION POLICY
+
+Every file here -- the main module and all tombstones alike -- versions
+normally and uniformly with the rest of the distribution
+(C<RewriteVersion::Transitional> / C<BumpVersionAfterRelease>, no
+C<version_finder> restriction in C<dist.ini>). There is no per-tombstone
+hand-frozen C<$VERSION>. The starting version, C<1.105>, was chosen for one
+reason: it is safely past C<IO-K8s 1.100>, the last CPAN release that
+shipped any of these module names. IO-K8s will never ship these names
+again (they are permanently removed, not merely between releases), and
+this distribution's own version only ever increases from here, so
+C<1.105> stays ahead of that target for good without further
+special-casing.
+
+If a future tombstone is ever added for a name whose last-shipped version
+is higher than whatever version this dist has reached by then, confirm
+that before releasing and bump first if needed -- an ordinary
+version-ordering check, not a reason to reintroduce per-file version
+overrides.
 
 For the step-by-step procedure to add a new tombstone when a future rename
 or removal happens -- including how to audit C<IO-K8s> for orphaned module

@@ -4,16 +4,7 @@ package IO::K8s::Api::Resource::V1alpha3::PodSchedulingContext;
 use strict;
 use warnings;
 
-# Deliberately explicit $VERSION -- this dist's main module is versioned by
-# dzil (RewriteVersion, restricted to :MainModule via version_finder in
-# dist.ini), but tombstone sub-modules are NOT touched by it. This module
-# needs its own hard-coded, higher $VERSION so PAUSE indexes THIS module as
-# canonical for the name: PAUSE resolves each module name to whichever
-# shipped distribution carries the highest $VERSION, and IO-K8s's last CPAN
-# release to ship this module was 1.100. Do NOT "clean this up" to let dzil
-# manage it -- doing so hands the PAUSE index entry back to the stale,
-# superseded IO-K8s 1.100 release.
-our $VERSION = '1.200';
+our $VERSION = '1.105';
 
 die __PACKAGE__ . " has been removed. It was part of Kubernetes' \"classic\""
   . " Dynamic Resource Allocation (DRA) control-plane-controller allocation"

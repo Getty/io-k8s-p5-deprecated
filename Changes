@@ -46,9 +46,10 @@ Revision history for IO-K8s-Deprecated
       and re-tombstone the same names.
 
     * Mechanism
-        - Each tombstone carries an explicit $VERSION (1.200) strictly
-          higher than IO-K8s 1.100, the last CPAN release that shipped
-          these module names (as warning stubs, or in the DRA case as
-          real classes), so PAUSE indexes this dist as canonical for the
-          old names and `cpanm Old::Module::Name` installs the redirect
+        - Every file in this dist versions normally and uniformly with
+          dzil (no version_finder override), starting at 1.105 -- safely
+          past IO-K8s 1.100, the last CPAN release that shipped these
+          module names (as warning stubs, or in the DRA case as real
+          classes) -- so PAUSE indexes this dist as canonical for the old
+          names and `cpanm Old::Module::Name` installs the redirect
           instead of the stale pre-removal code.

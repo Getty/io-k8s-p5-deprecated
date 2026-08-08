@@ -4,16 +4,7 @@ package IO::K8s::Api::Rbac::V1alpha1::ClusterRoleBindingList;
 use strict;
 use warnings;
 
-# Deliberately explicit $VERSION -- this dist's main module is versioned by
-# dzil (RewriteVersion, restricted to :MainModule via version_finder in
-# dist.ini), but tombstone sub-modules are NOT touched by it. This module
-# needs its own hard-coded, higher $VERSION so PAUSE indexes THIS module as
-# canonical for the name: PAUSE resolves each module name to whichever
-# shipped distribution carries the highest $VERSION, and IO-K8s's last CPAN
-# release to ship this module (as a warning stub) was 1.100. Do NOT "clean
-# this up" to let dzil manage it -- doing so hands the PAUSE index entry
-# back to the stale, superseded IO-K8s 1.100 release.
-our $VERSION = '1.200';
+our $VERSION = '1.105';
 
 die __PACKAGE__ . " has been removed. IO-K8s replaced all per-resource"
   . " *List classes with the single generic IO::K8s::List back in its 1.00"

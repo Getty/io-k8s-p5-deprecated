@@ -4,12 +4,7 @@ package IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextSpec;
 use strict;
 use warnings;
 
-# Deliberately explicit $VERSION -- see
-# IO::K8s::Api::Resource::V1alpha3::PodSchedulingContext for the full
-# rationale. Do NOT "clean this up" to let dzil manage it -- doing so
-# hands the PAUSE index entry back to the stale, superseded IO-K8s 1.100
-# release.
-our $VERSION = '1.200';
+our $VERSION = '1.105';
 
 die __PACKAGE__ . " has been removed. It was the nested spec type for"
   . " IO::K8s::Api::Resource::V1alpha3::PodSchedulingContext, part of"
