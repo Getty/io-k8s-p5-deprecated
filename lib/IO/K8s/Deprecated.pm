@@ -1,0 +1,173 @@
+package IO::K8s::Deprecated;
+our $VERSION = '0.001';
+# ABSTRACT: Registry of CPAN redirect stubs for renamed/retired IO::K8s modules
+
+use strict;
+use warnings;
+
+=head1 DESCRIPTION
+
+C<IO::K8s::Deprecated> is the permanent home for "tombstone" redirect stub
+modules: when an IO::K8s class gets renamed or retired, the old module
+name stays indexed on PAUSE forever against the last release that shipped
+it -- PAUSE has no delete. Anyone still running C<cpanm Old::Module::Name>
+would keep installing that stale, superseded code with no hint a
+replacement exists.
+
+PAUSE indexes per B<module name>, not per distribution: it resolves each
+module name to whichever shipped release -- of any distribution, including
+a later release of the I<same> one -- carries the highest C<$VERSION> for
+that name. IO::K8s ships all ~700 of its API and CRD classes from a single
+distribution, so a class that is genuinely dropped orphans its name exactly
+the same way a cross-distribution rename would: PAUSE does not know or care
+that "the dist is still actively released", it only sees that no shipped
+release contains that module name above the version of the last one that
+did.
+
+B<Not every internally-deprecated IO::K8s class belongs here.> IO::K8s has
+long shipped ~76 C<*List> classes (C<PodList>, C<ServiceList>, etc.) as
+soft-deprecated warning stubs that pointed callers at the unified
+L<IO::K8s::List> -- see C<perldoc -m IO::K8s> under "UPGRADING FROM
+PREVIOUS VERSIONS" for the historical note. As long as those stubs kept
+shipping under their own name in every IO-K8s release, PAUSE never orphaned
+them and no tombstone was needed. Only once IO-K8s actually stopped
+shipping them (dropped the files outright, no longer just warning) did
+their names become tombstone candidates -- which is what the entries below
+are. Before adding a tombstone for anything else, confirm the class is
+truly gone from IO-K8s's current HEAD, not just soft-deprecated in place;
+also check whether it was intentionally kept for backward compatibility
+under an older API version (IO-K8s's own convention -- e.g. Apps
+V1beta1/V1beta2/V1 all still ship side by side -- some renames that look
+tombstone-worthy at first glance turn out to be reverted for exactly this
+reason).
+
+This distribution fixes the genuine orphan case with the standard CPAN
+redirect-takeover pattern: it ships a small stub package under the OLD
+module name, with an explicit C<$VERSION> set strictly higher than the
+last CPAN release of C<IO-K8s> that shipped that name. PAUSE then indexes
+I<this> distribution as canonical for the old name. The stub does nothing
+at runtime except C<die> immediately on load, naming the replacement
+module, so C<cpanm Old::Module::Name> (or a cpanfile pinning it) now
+installs a clear, actionable message instead of silently reinstalling dead
+code.
+
+This dist itself (C<IO::K8s::Deprecated>, this module) has no runtime
+behaviour of its own -- it is a documentation landing page and the dzil
+main module. Each tombstone module is self-contained and carries no
+dependency on IO::K8s core.
+
+For the step-by-step procedure to add a new tombstone when a future rename
+or removal happens -- including how to audit C<IO-K8s> for orphaned module
+names -- see the C<io-k8s-deprecated> skill
+(C<.claude/skills/io-k8s-deprecated/SKILL.md> in this repo; packaged into
+the sharedir at build time).
+
+=head1 CURRENT TOMBSTONES
+
+=head2 Consolidated into the generic IO::K8s::List (76 classes)
+
+IO-K8s replaced every per-resource C<*List> class with a single generic
+L<IO::K8s::List> back in its C<1.00> Moose-to-Moo rewrite. Each of the
+classes below was never a real class in the C<1.x> series -- it only
+emitted a deprecation warning on load. C<IO-K8s> C<1.100> was the last CPAN
+release to ship even that warning stub; all 76 were dropped from the
+distribution outright afterwards. Every one of them redirects to the same
+successor:
+
+  IO::K8s::Api::Admissionregistration::V1alpha1::InitializerConfigurationList
+  IO::K8s::Api::Admissionregistration::V1beta1::MutatingWebhookConfigurationList
+  IO::K8s::Api::Admissionregistration::V1beta1::ValidatingWebhookConfigurationList
+  IO::K8s::Api::Apps::V1beta1::ControllerRevisionList
+  IO::K8s::Api::Apps::V1beta1::DeploymentList
+  IO::K8s::Api::Apps::V1beta1::StatefulSetList
+  IO::K8s::Api::Apps::V1beta2::ControllerRevisionList
+  IO::K8s::Api::Apps::V1beta2::DaemonSetList
+  IO::K8s::Api::Apps::V1beta2::DeploymentList
+  IO::K8s::Api::Apps::V1beta2::ReplicaSetList
+  IO::K8s::Api::Apps::V1beta2::StatefulSetList
+  IO::K8s::Api::Apps::V1::ControllerRevisionList
+  IO::K8s::Api::Apps::V1::DaemonSetList
+  IO::K8s::Api::Apps::V1::DeploymentList
+  IO::K8s::Api::Apps::V1::ReplicaSetList
+  IO::K8s::Api::Apps::V1::StatefulSetList
+  IO::K8s::Api::Auditregistration::V1alpha1::AuditSinkList
+  IO::K8s::Api::Autoscaling::V1::HorizontalPodAutoscalerList
+  IO::K8s::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerList
+  IO::K8s::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerList
+  IO::K8s::Api::Batch::V1beta1::CronJobList
+  IO::K8s::Api::Batch::V1::JobList
+  IO::K8s::Api::Batch::V2alpha1::CronJobList
+  IO::K8s::Api::Certificates::V1beta1::CertificateSigningRequestList
+  IO::K8s::Api::Coordination::V1beta1::LeaseList
+  IO::K8s::Api::Core::V1::ComponentStatusList
+  IO::K8s::Api::Core::V1::ConfigMapList
+  IO::K8s::Api::Core::V1::EndpointsList
+  IO::K8s::Api::Core::V1::EventList
+  IO::K8s::Api::Core::V1::LimitRangeList
+  IO::K8s::Api::Core::V1::NamespaceList
+  IO::K8s::Api::Core::V1::NodeList
+  IO::K8s::Api::Core::V1::PersistentVolumeClaimList
+  IO::K8s::Api::Core::V1::PersistentVolumeList
+  IO::K8s::Api::Core::V1::PodList
+  IO::K8s::Api::Core::V1::PodTemplateList
+  IO::K8s::Api::Core::V1::ReplicationControllerList
+  IO::K8s::Api::Core::V1::ResourceQuotaList
+  IO::K8s::Api::Core::V1::SecretList
+  IO::K8s::Api::Core::V1::ServiceAccountList
+  IO::K8s::Api::Core::V1::ServiceList
+  IO::K8s::Api::Events::V1beta1::EventList
+  IO::K8s::ApiExtensionsApiServer::Pkg::Apis::Apiextensions::V1beta1::CustomResourceDefinitionList
+  IO::K8s::Api::Extensions::V1beta1::DaemonSetList
+  IO::K8s::Api::Extensions::V1beta1::DeploymentList
+  IO::K8s::Api::Extensions::V1beta1::IngressList
+  IO::K8s::Api::Extensions::V1beta1::NetworkPolicyList
+  IO::K8s::Api::Extensions::V1beta1::PodSecurityPolicyList
+  IO::K8s::Api::Extensions::V1beta1::ReplicaSetList
+  IO::K8s::Apimachinery::Pkg::Apis::Meta::V1::APIGroupList
+  IO::K8s::Apimachinery::Pkg::Apis::Meta::V1::APIResourceList
+  IO::K8s::Api::Networking::V1::NetworkPolicyList
+  IO::K8s::Api::Policy::V1beta1::PodDisruptionBudgetList
+  IO::K8s::Api::Policy::V1beta1::PodSecurityPolicyList
+  IO::K8s::Api::Rbac::V1alpha1::ClusterRoleBindingList
+  IO::K8s::Api::Rbac::V1alpha1::ClusterRoleList
+  IO::K8s::Api::Rbac::V1alpha1::RoleBindingList
+  IO::K8s::Api::Rbac::V1alpha1::RoleList
+  IO::K8s::Api::Rbac::V1beta1::ClusterRoleBindingList
+  IO::K8s::Api::Rbac::V1beta1::ClusterRoleList
+  IO::K8s::Api::Rbac::V1beta1::RoleBindingList
+  IO::K8s::Api::Rbac::V1beta1::RoleList
+  IO::K8s::Api::Rbac::V1::ClusterRoleBindingList
+  IO::K8s::Api::Rbac::V1::ClusterRoleList
+  IO::K8s::Api::Rbac::V1::RoleBindingList
+  IO::K8s::Api::Rbac::V1::RoleList
+  IO::K8s::Api::Scheduling::V1alpha1::PriorityClassList
+  IO::K8s::Api::Scheduling::V1beta1::PriorityClassList
+  IO::K8s::Api::Settings::V1alpha1::PodPresetList
+  IO::K8s::Api::Storage::V1alpha1::VolumeAttachmentList
+  IO::K8s::Api::Storage::V1beta1::StorageClassList
+  IO::K8s::Api::Storage::V1beta1::VolumeAttachmentList
+  IO::K8s::Api::Storage::V1::StorageClassList
+  IO::K8s::Api::Storage::V1::VolumeAttachmentList
+  IO::K8s::KubeAggregator::Pkg::Apis::Apiregistration::V1::APIServiceList
+  IO::K8s::KubeAggregator::Pkg::Apis::Apiregistration::V1beta1::APIServiceList
+
+All 76 redirect to: L<IO::K8s::List>.
+
+=head1 CONSIDERED BUT NOT TOMBSTONED
+
+The Cilium v1.19.2 upgrade in C<IO-K8s> C<1.100> initially dropped 8
+C<cilium.io/v2alpha1> classes (promoting 6 to C<cilium.io/v2>, removing 2
+outright). Those classes were restored in C<IO-K8s> for backward
+compatibility instead -- they now ship alongside their current-API-version
+siblings, matching this dist's own convention of keeping multiple API
+versions of a resource side by side. No tombstone was needed after the
+restore; see C<io-k8s-p5>'s C<Changes> for the restoring release. Recorded
+here so a future audit doesn't rediscover and re-tombstone the same names.
+
+=head1 SEE ALSO
+
+L<IO::K8s::List>, L<IO::K8s>
+
+=cut
+
+1;
