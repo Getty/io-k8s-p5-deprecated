@@ -93,10 +93,31 @@ my @old_list_classes = (
   'IO::K8s::KubeAggregator::Pkg::Apis::Apiregistration::V1beta1::APIServiceList',
 );
 
-plan tests => 2 * scalar @old_list_classes;
-
 for my $mod (@old_list_classes) {
   my $ok = eval "require $mod; 1";
   ok(!$ok, "$mod dies on load");
   like($@, qr/IO::K8s::List\b/, "$mod die message points at IO::K8s::List");
 }
+
+# The four "classic DRA" (resource.k8s.io/v1alpha3 control-plane-controller
+# allocation) tombstones are a different shape from the List consolidation
+# above: genuinely removed with no single successor class (the whole
+# allocation mechanism was replaced, not one class renamed to another), so
+# each die message is checked against the same "removed" pattern rather
+# than a shared successor class name.
+my @classic_dra_removed = (
+  'IO::K8s::Api::Resource::V1alpha3::PodSchedulingContext',
+  'IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextSpec',
+  'IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextStatus',
+  'IO::K8s::Api::Resource::V1alpha3::ResourceClaimSchedulingStatus',
+);
+
+for my $mod (@classic_dra_removed) {
+  my $ok = eval "require $mod; 1";
+  ok(!$ok, "$mod dies on load");
+  like($@, qr/has been removed/i, "$mod die message says it was removed");
+  unlike($@, qr/renamed/i, "$mod die message does not falsely claim a rename");
+  like($@, qr/resource\.k8s\.io\/v1\b/, "$mod die message points at the current resource.k8s.io/v1 DRA API");
+}
+
+done_testing;

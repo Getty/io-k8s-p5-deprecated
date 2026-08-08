@@ -153,6 +153,30 @@ successor:
 
 All 76 redirect to: L<IO::K8s::List>.
 
+=head2 Removed -- classic DRA control-plane-controller allocation (4 classes)
+
+C<resource.k8s.io/v1alpha3> shipped an alpha-only (never GA) "classic DRA"
+allocation flow that coordinated C<WaitForFirstConsumer> resource-claim
+scheduling between the scheduler and an external controller. When Dynamic
+Resource Allocation graduated to GA with an architecturally different
+structured-parameters model at C<resource.k8s.io/v1>, that whole mechanism
+-- including these four classes -- was dropped. There is no 1:1 successor
+for any of them; the current DRA API is
+L<IO::K8s::Api::Resource::V1::ResourceClaim> and
+L<IO::K8s::Api::Resource::V1::DeviceClass>. Last shipped in C<IO-K8s>
+C<1.100>:
+
+  IO::K8s::Api::Resource::V1alpha3::PodSchedulingContext
+  IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextSpec
+  IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextStatus
+  IO::K8s::Api::Resource::V1alpha3::ResourceClaimSchedulingStatus
+
+Unlike the admission/auth/flowcontrol classes noted below, these had no
+lingering old-cluster backward-compatibility rationale to keep them around
+in IO-K8s: DRA itself was alpha-only when these shipped, never GA, so
+there was no "still-supported older cluster" depending on this API the way
+there is for a long-GA API's deprecated beta track.
+
 =head1 CONSIDERED BUT NOT TOMBSTONED
 
 The Cilium v1.19.2 upgrade in C<IO-K8s> C<1.100> initially dropped 8
@@ -164,9 +188,18 @@ versions of a resource side by side. No tombstone was needed after the
 restore; see C<io-k8s-p5>'s C<Changes> for the restoring release. Recorded
 here so a future audit doesn't rediscover and re-tombstone the same names.
 
+A v1.31 -> v1.36 upstream sync of C<IO-K8s> also flagged (and then kept,
+not removed) the older served-but-superseded API tracks
+C<admissionregistration.k8s.io/{v1alpha1,v1beta1}> C<ValidatingAdmissionPolicy>,
+C<authentication.k8s.io/{v1alpha1,v1beta1}> C<SelfSubjectReview>, and
+C<flowcontrol.apiserver.k8s.io/v1beta3> -- all long-GA APIs whose older
+alpha/beta tracks may still be needed by callers targeting an older
+cluster, the same backward-compatibility rationale as the Cilium restore
+above. No tombstone needed for these either.
+
 =head1 SEE ALSO
 
-L<IO::K8s::List>, L<IO::K8s>
+L<IO::K8s::List>, L<IO::K8s::Api::Resource::V1::ResourceClaim>, L<IO::K8s>
 
 =cut
 

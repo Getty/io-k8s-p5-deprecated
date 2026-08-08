@@ -28,6 +28,21 @@ warning stub; all 76 were then dropped from the distribution outright. Full
 list of the 76 old names: see `lib/IO/K8s/Deprecated.pm`'s POD, or
 `t/01-tombstones.t`. Every one of them redirects to `IO::K8s::List`.
 
+### Removed -- classic DRA control-plane-controller allocation (4 classes)
+
+`resource.k8s.io/v1alpha3` shipped an alpha-only (never GA) "classic DRA"
+allocation flow. When Dynamic Resource Allocation graduated to GA with a
+structured-parameters model at `resource.k8s.io/v1`, that mechanism --
+including these four classes -- was dropped, with no 1:1 successor. Last
+shipped in `IO-K8s` `1.100`:
+
+| Old module | Redirects to |
+|---|---|
+| `IO::K8s::Api::Resource::V1alpha3::PodSchedulingContext` | *(removed, no replacement -- see IO::K8s::Api::Resource::V1)* |
+| `IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextSpec` | *(removed, no replacement)* |
+| `IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextStatus` | *(removed, no replacement)* |
+| `IO::K8s::Api::Resource::V1alpha3::ResourceClaimSchedulingStatus` | *(removed, no replacement)* |
+
 ### Considered but not tombstoned
 
 The Cilium v1.19.2 upgrade in `IO-K8s` `1.100` initially dropped 8
@@ -36,6 +51,12 @@ backward compatibility (matching `io-k8s-p5`'s own convention of keeping
 multiple API versions of a resource side by side, e.g. Apps
 V1beta1/V1beta2/V1). No tombstone needed -- see `lib/IO/K8s/Deprecated.pm`'s
 POD for the full note.
+
+A later v1.31 -> v1.36 upstream sync flagged the same pattern for older
+served-but-superseded core API tracks (`ValidatingAdmissionPolicy`
+v1alpha1/v1beta1, `SelfSubjectReview` v1alpha1/v1beta1,
+`flowcontrol.apiserver.k8s.io/v1beta3`) -- kept in `IO-K8s`, not
+tombstoned, for the same reason.
 
 ## Adding a new tombstone
 

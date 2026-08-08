@@ -65,14 +65,26 @@ comment explaining why, and it must never be "normalized" away.
 
 ## Current tombstones
 
-76 modules, all one shape: the old per-resource `*List` classes IO-K8s
-consolidated into the generic `IO::K8s::List` (last shipped, as a warning
-stub, in `IO-K8s` `1.100`; each tombstone here carries `$VERSION = '1.200'`
-to beat that). Full list: `lib/IO/K8s/Deprecated.pm`'s POD, or
-`t/01-tombstones.t`'s `@old_list_classes` array.
+80 modules total, two shapes, both versioned `$VERSION = '1.200'` to beat
+`IO-K8s` `1.100` (the last release that shipped every one of these names):
 
-No Cilium tombstones — see "Version policy" false-start #2 above and
-`lib/IO/K8s/Deprecated.pm`'s "CONSIDERED BUT NOT TOMBSTONED" section.
+- **76 "consolidated" tombstones** — the old per-resource `*List` classes
+  IO-K8s consolidated into the generic `IO::K8s::List`. Full list:
+  `lib/IO/K8s/Deprecated.pm`'s POD, or `t/01-tombstones.t`'s
+  `@old_list_classes` array.
+- **4 "removed, no successor" tombstones** — the classic
+  `resource.k8s.io/v1alpha3` DRA control-plane-controller allocation
+  classes (`PodSchedulingContext` + its `Spec`/`Status`,
+  `ResourceClaimSchedulingStatus`), dropped when DRA graduated to GA at
+  `resource.k8s.io/v1` with an architecturally different model. Unlike the
+  List classes, these never had a soft-deprecation warning period — they
+  were genuinely removed outright. List: `lib/IO/K8s/Deprecated.pm`'s POD,
+  or `t/01-tombstones.t`'s `@classic_dra_removed` array.
+
+No Cilium tombstones, and no tombstones for the admission/auth/flowcontrol
+classes flagged in a later upstream sync either — see "Version policy"
+false-start #2 above and `lib/IO/K8s/Deprecated.pm`'s "CONSIDERED BUT NOT
+TOMBSTONED" section for both.
 
 ## Adding a new tombstone
 
@@ -97,5 +109,7 @@ prove -lr t/
 ```
 
 `t/00-load.t` loads the real main module (`IO::K8s::Deprecated`) and must
-load cleanly. `t/01-tombstones.t` asserts every tombstone dies on load with
-a message pointing at `IO::K8s::List`.
+load cleanly. `t/01-tombstones.t` asserts every tombstone dies on load —
+the 76 List-consolidation ones with a message pointing at `IO::K8s::List`,
+the 4 classic-DRA ones with a "removed, no successor" message pointing at
+the current `resource.k8s.io/v1` API.
