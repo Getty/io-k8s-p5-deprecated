@@ -1,6 +1,6 @@
 ---
 name: io-k8s-deprecated
-description: "IO::K8s::Deprecated -- permanent home for CPAN redirect (tombstone) stub modules covering IO::K8s classes genuinely removed from the IO-K8s distribution's own release history. Covers the PAUSE-takeover mechanism, how to tell a genuine orphan from a soft-deprecated-in-place or restored-for-backcompat class, the audit method, and the procedure for adding a new tombstone."
+description: Use when an IO::K8s class was removed and needs a CPAN tombstone, or when auditing IO-K8s for orphaned module names.
 user-invocable: false
 allowed-tools: Read, Grep, Glob
 model: sonnet
