@@ -1,6 +1,6 @@
 # CLAUDE.md — IO::K8s::Deprecated
 
-**MANDATORY: load the `perl-core` skill via the Skill tool before editing any
+**MANDATORY: load the `getty-perl-core` skill via the Skill tool before editing any
 Perl code in this repo.** It encodes Getty's house rules; the
 `io-k8s-deprecated` skill (`.claude/skills/io-k8s-deprecated/SKILL.md`)
 layers the tombstone-specific procedure on top and is auto-loaded into the
