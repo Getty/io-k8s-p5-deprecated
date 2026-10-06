@@ -17,16 +17,18 @@ with a message naming the replacement.
 
 ## Current tombstones
 
-### Consolidated into the generic `IO::K8s::List` (76 classes)
+### Consolidated into the generic `IO::K8s::List` (74 classes)
 
 IO-K8s replaced every per-resource `*List` class (`PodList`, `ServiceList`,
 etc.) with a single generic [`IO::K8s::List`](https://metacpan.org/pod/IO::K8s::List)
 back in its `1.00` Moose-to-Moo rewrite. Each one only ever emitted a
 deprecation warning after that -- none were real classes in the `1.x`
 series. `IO-K8s` `1.100` was the last CPAN release to ship even that
-warning stub; all 76 were then dropped from the distribution outright. Full
-list of the 76 old names: see `lib/IO/K8s/Deprecated.pm`'s POD, or
-`t/01-tombstones.t`. Every one of them redirects to `IO::K8s::List`.
+warning stub; all 76 such stubs were then dropped from the distribution
+outright. 74 of them stayed gone and are tombstoned here (for the other two
+see "No longer tombstoned" below). Full list of the 74 old names: see
+`lib/IO/K8s/Deprecated.pm`'s POD, or `t/01-tombstones.t`. Every one of them
+redirects to `IO::K8s::List`.
 
 ### Removed -- classic DRA control-plane-controller allocation (4 classes)
 
@@ -42,6 +44,27 @@ shipped in `IO-K8s` `1.100`:
 | `IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextSpec` | *(removed, no replacement)* |
 | `IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextStatus` | *(removed, no replacement)* |
 | `IO::K8s::Api::Resource::V1alpha3::ResourceClaimSchedulingStatus` | *(removed, no replacement)* |
+
+### No longer tombstoned
+
+Release `1.105` of this distribution also shipped tombstones for
+`IO::K8s::Apimachinery::Pkg::Apis::Meta::V1::APIGroupList` and
+`IO::K8s::Apimachinery::Pkg::Apis::Meta::V1::APIResourceList`, swept up with
+the `*List` classes above. They are not lists of resources but the `meta.v1`
+discovery Kinds, and `IO-K8s` `1.106` ships both again as real classes. Both
+distributions install the same file, so installing this one after `IO-K8s`
+replaced the working classes with stubs that die on load -- the two
+tombstones were removed.
+
+If you installed `IO-K8s-Deprecated` `1.105` on top of `IO-K8s` `1.106` or
+later, upgrading this distribution does not bring the two classes back;
+reinstall `IO-K8s` (`cpanm --reinstall IO::K8s`).
+
+The rule behind it -- no package shipped here may be shipped by the current
+`IO-K8s` -- is held by `t/02-name-guard.t`. It compares against an
+`io-k8s-p5` checkout next to this one, or an installed `IO::K8s` at least as
+new as this distribution, or the lib directory named in `IO_K8S_LIB`, and
+skips when none of them is there.
 
 ### Considered but not tombstoned
 
@@ -65,7 +88,8 @@ See the `io-k8s-deprecated` skill
 the next time an IO::K8s module is renamed or removed -- including how to
 audit the distribution's git history for orphaned module names, and how to
 tell a genuine orphan apart from a class that's merely soft-deprecated in
-place or was restored for backward compatibility.
+place, was restored for backward compatibility, or is shipped by `IO-K8s`
+again.
 
 ## License
 
