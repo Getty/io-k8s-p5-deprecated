@@ -4,7 +4,7 @@ package IO::K8s::Api::Rbac::V1::RoleList;
 use strict;
 use warnings;
 
-our $VERSION = '1.106';
+our $VERSION = '1.112';
 
 die __PACKAGE__ . " has been removed. IO-K8s replaced all per-resource"
   . " *List classes with the single generic IO::K8s::List back in its 1.00"

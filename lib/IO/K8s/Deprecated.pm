@@ -1,5 +1,5 @@
 package IO::K8s::Deprecated;
-our $VERSION = '1.106';
+our $VERSION = '1.112';
 # ABSTRACT: Registry of CPAN redirect stubs for renamed/retired IO::K8s modules
 
 use strict;
