@@ -1,6 +1,6 @@
 Revision history for IO-K8s-Deprecated
 
-{{$NEXT}}
+1.111     2026-10-21 18:26:25Z
 
     * Removed the tombstones for
       IO::K8s::Apimachinery::Pkg::Apis::Meta::V1::APIGroupList and
