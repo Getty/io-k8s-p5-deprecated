@@ -45,6 +45,30 @@ shipped in `IO-K8s` `1.100`:
 | `IO::K8s::Api::Resource::V1alpha3::PodSchedulingContextStatus` | *(removed, no replacement)* |
 | `IO::K8s::Api::Resource::V1alpha3::ResourceClaimSchedulingStatus` | *(removed, no replacement)* |
 
+### Retired API versions from IO-K8s 0.03, with a successor (180 classes)
+
+`IO-K8s` `0.01` to `0.03` (May 2018) shipped classes for the alpha and beta
+API versions of that time. Kubernetes has retired those API versions since,
+and no `IO-K8s` `1.x` release ships these classes, so the PAUSE index kept
+resolving their names to `IO-K8s` `0.03` -- a release that would also
+replace the classes of a current IO-K8s, `IO::K8s` itself included, with
+their 2018 versions. Each tombstone names its successor: mostly the same
+class at the GA version, or the group it moved to (`extensions/v1beta1`
+workloads to `apps/v1`, Ingress and NetworkPolicy to
+`networking.k8s.io/v1`, Scale to `autoscaling/v1`), plus `Handler` ->
+`LifecycleHandler` and the v1beta1 `Webhook` -> `MutatingWebhook` /
+`ValidatingWebhook`. Full list with successors: `lib/IO/K8s/Deprecated.pm`'s
+POD, or `t/01-tombstones.t`'s `%retired_api_successor`.
+
+### Dropped by Kubernetes, from IO-K8s 0.03 (32 classes)
+
+Also only in `IO-K8s` `0.01` to `0.03`, with no successor class:
+PodSecurityPolicy (20 classes, `extensions` and `policy` v1beta1), the
+alpha Initializers (5), the Deployment rollback types (4), the alpha
+PodPreset (2) and RawExtension (1, an `Opaque` field in IO-K8s `1.x`).
+Each tombstone says why. List: `lib/IO/K8s/Deprecated.pm`'s POD, or
+`t/01-tombstones.t`'s `%retired_api_removed`.
+
 ### No longer tombstoned
 
 Release `1.105` of this distribution also shipped tombstones for
@@ -72,8 +96,8 @@ there.
 The Cilium v1.19.2 upgrade in `IO-K8s` `1.100` initially dropped 8
 `cilium.io/v2alpha1` classes. They were restored in `IO-K8s` instead, for
 backward compatibility (matching `io-k8s-p5`'s own convention of keeping
-multiple API versions of a resource side by side, e.g. Apps
-V1beta1/V1beta2/V1). No tombstone needed -- see `lib/IO/K8s/Deprecated.pm`'s
+multiple API versions of a resource side by side, e.g. Autoscaling V1/V2).
+No tombstone needed -- see `lib/IO/K8s/Deprecated.pm`'s
 POD for the full note.
 
 A later v1.31 -> v1.36 upstream sync flagged the same pattern for older
