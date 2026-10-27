@@ -2,6 +2,13 @@ Revision history for IO-K8s-Deprecated
 
 {{$NEXT}}
 
+    * The name guard (t/02-name-guard.t) takes what an installed IO-K8s
+      ships from the .packlist of that installation. Class files an older
+      IO-K8s left in the tree count as leftovers, a file the .packlist
+      lists counts as a collision. An installed IO::K8s without a
+      .packlist is not compared against, and the test skips.
+      (GitHub issue 1)
+
 1.111     2026-10-21 18:26:25Z
 
     * Removed the tombstones for

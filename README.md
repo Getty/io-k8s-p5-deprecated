@@ -63,8 +63,9 @@ reinstall `IO-K8s` (`cpanm --reinstall IO::K8s`).
 The rule behind it -- no package shipped here may be shipped by the current
 `IO-K8s` -- is held by `t/02-name-guard.t`. It compares against an
 `io-k8s-p5` checkout next to this one, or an installed `IO::K8s` at least as
-new as this distribution, or the lib directory named in `IO_K8S_LIB`, and
-skips when none of them is there.
+new as this distribution (what it ships is what its `.packlist` lists), or
+the lib directory named in `IO_K8S_LIB`, and skips when none of them is
+there.
 
 ### Considered but not tombstoned
 

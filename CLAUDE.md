@@ -134,6 +134,7 @@ the 4 classic-DRA ones with a "removed, no successor" message pointing at
 the current `resource.k8s.io/v1` API. `t/02-name-guard.t` asserts that no
 package shipped here is shipped by the current `IO-K8s`: it reads the
 `io-k8s-p5` checkout next to this one (found from a dzil build directory
-too), else an installed `IO::K8s` at least as new as this dist, or the lib
+too), else an installed `IO::K8s` at least as new as this dist (what it
+ships is what its `.packlist` lists; without one it skips), or the lib
 directory in `IO_K8S_LIB`. Without any of them it **skips** — a skip is not
 a pass, make sure the checkout is there and current before a release.

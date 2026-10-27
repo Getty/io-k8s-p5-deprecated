@@ -152,10 +152,10 @@ Consequences shared by all three shapes:
   batch targets a name IO-K8s shipped past whatever version this dist has
   reached by then, check that before releasing and bump first if needed.
 - **The `die` is unconditional, at the top level, and starts its line with
-  `die __PACKAGE__`.** `t/02-name-guard.t` recognises an installed copy of
-  a tombstone by exactly that line when it has to tell this dist's stubs
-  apart from `IO-K8s`'s classes in a shared install tree, and it fails for
-  a stub written any other way.
+  `die __PACKAGE__`.** `t/02-name-guard.t` asserts every stub carries
+  exactly that line, so a stub installed over a class `IO-K8s` ships is
+  recognisable as a tombstone, and it fails for a stub written any other
+  way.
 - **The module does nothing else.** No POD-only doc stub, no re-export, no
   `use base` of the replacement, and critically **no `use
   IO::K8s::APIObject`** -- a tombstone must not register itself as a live
