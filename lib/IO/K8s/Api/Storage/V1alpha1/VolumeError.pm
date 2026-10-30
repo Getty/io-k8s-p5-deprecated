@@ -4,7 +4,7 @@ package IO::K8s::Api::Storage::V1alpha1::VolumeError;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of the storage.k8s.io/v1alpha1 API,"
   . " which Kubernetes has retired; IO-K8s shipped it only in 0.01 to"

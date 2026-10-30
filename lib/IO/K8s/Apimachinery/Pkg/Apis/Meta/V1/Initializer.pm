@@ -4,7 +4,7 @@ package IO::K8s::Apimachinery::Pkg::Apis::Meta::V1::Initializer;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of the alpha Initializers feature,"
   . " which Kubernetes removed in v1.14. Mutating admission webhooks"

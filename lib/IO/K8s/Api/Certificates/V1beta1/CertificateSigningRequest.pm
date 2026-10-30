@@ -4,7 +4,7 @@ package IO::K8s::Api::Certificates::V1beta1::CertificateSigningRequest;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of the certificates.k8s.io/v1beta1"
   . " API, which Kubernetes has retired; IO-K8s shipped it only in 0.01"

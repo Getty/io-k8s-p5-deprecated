@@ -4,7 +4,7 @@ package IO::K8s::Api::Core::V1::Handler;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. Kubernetes renamed the core v1 type Handler to"
   . " LifecycleHandler; IO-K8s shipped the old name only in 0.01 to"

@@ -4,7 +4,7 @@ package IO::K8s::Api::Apps::V1beta1::DeploymentRollback;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It belonged to the Deployment rollback of"
   . " apps/v1beta1. apps/v1 has no rollback subresource and no"

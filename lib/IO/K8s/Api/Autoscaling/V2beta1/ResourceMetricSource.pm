@@ -4,7 +4,7 @@ package IO::K8s::Api::Autoscaling::V2beta1::ResourceMetricSource;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of the autoscaling/v2beta1 API,"
   . " which Kubernetes has retired; IO-K8s shipped it only in 0.01 to"

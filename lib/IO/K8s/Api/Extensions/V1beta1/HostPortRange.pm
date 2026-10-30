@@ -4,7 +4,7 @@ package IO::K8s::Api::Extensions::V1beta1::HostPortRange;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of PodSecurityPolicy"
   . " (extensions/v1beta1), which Kubernetes removed in v1.25. Pod"

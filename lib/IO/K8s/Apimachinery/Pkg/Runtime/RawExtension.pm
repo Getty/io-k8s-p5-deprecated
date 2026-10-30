@@ -4,7 +4,7 @@ package IO::K8s::Apimachinery::Pkg::Runtime::RawExtension;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. IO-K8s 1.x has no class for RawExtension: a"
   . " field of that type is declared Opaque and takes any value, copied"

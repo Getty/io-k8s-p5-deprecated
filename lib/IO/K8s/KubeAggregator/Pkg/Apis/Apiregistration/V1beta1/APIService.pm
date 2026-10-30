@@ -4,7 +4,7 @@ package IO::K8s::KubeAggregator::Pkg::Apis::Apiregistration::V1beta1::APIService
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of the"
   . " apiregistration.k8s.io/v1beta1 API, which Kubernetes has retired;"

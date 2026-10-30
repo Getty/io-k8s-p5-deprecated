@@ -1,5 +1,7 @@
 Revision history for IO-K8s-Deprecated
 
+{{$NEXT}}
+
 1.112     2026-10-30 22:25:44Z
 
     * 212 new tombstones for the classes of IO-K8s 0.01 to 0.03 (2018)

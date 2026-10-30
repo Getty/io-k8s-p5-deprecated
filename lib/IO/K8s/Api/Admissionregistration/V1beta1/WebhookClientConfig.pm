@@ -4,7 +4,7 @@ package IO::K8s::Api::Admissionregistration::V1beta1::WebhookClientConfig;
 use strict;
 use warnings;
 
-our $VERSION = '1.112';
+our $VERSION = '1.113';
 
 die __PACKAGE__ . " has been removed. It was part of the"
   . " admissionregistration.k8s.io/v1beta1 API, which Kubernetes has"
